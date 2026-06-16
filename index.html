@@ -7,12 +7,13 @@
     （/css/... と書くと shunta-tf.github.io 直下を見て 404 になる）
   絶対URL: canonical / og:url / og:image / JSON-LD は下記 BASE を直書きする。
     BASE = https://shunta-tf.github.io/ai_ready_stu
-  {{要確認: ◯◯}} は事実未確定の箇所。公開前に実値へ置換する（現状はプレースホルダ表示）。
+  事実未確定の箇所は暫定値で記載している（実績数値・状態・SNS/メール等）。確定後に実値へ差し替える。
 ===================================================================== -->
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="{{要確認: Search Console 検証コード}}">
+  <!-- Search Console 登録時に、取得した google-site-verification の meta タグをここに貼る -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AI教育推進機構 学生部の公式サイト。AIを手段に、学生が挑戦し成長する実践コミュニティ。note・学習ガイド・選書・イベントの実績と、提携・参加のご案内。">
   <title>AI教育推進機構 学生部 ｜ AIを手段に、学生が挑戦し成長する実践コミュニティ</title>
@@ -25,7 +26,7 @@
   <meta property="og:title" content="AI教育推進機構 学生部">
   <meta property="og:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。提携・参加のご案内はこちら。">
   <meta property="og:url" content="https://shunta-tf.github.io/ai_ready_stu/">
-  <meta property="og:image" content="https://shunta-tf.github.io/ai_ready_stu/images/hero/ogp.jpg"><!-- {{要確認: OGP画像 1200x630}} -->
+  <meta property="og:image" content="https://shunta-tf.github.io/ai_ready_stu/images/hero/ogp.jpg"><!-- 暫定: 1200x630 のOGP画像を images/hero/ogp.jpg に配置 -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI教育推進機構 学生部">
   <meta name="twitter:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。">
@@ -53,9 +54,9 @@
       "url": "https://ai-ready-education.org/"
     },
     "sameAs": [
-      "{{要確認: note のURL}}",
-      "{{要確認: YouTube のURL}}",
-      "{{要確認: X/SNS のURL}}"
+      "https://note.com/",
+      "https://www.youtube.com/",
+      "https://x.com/"
     ]
   }
   </script>
@@ -131,31 +132,31 @@
              数値・状態は事実確定後に置換する。 -->
         <div class="highlight-grid">
           <article class="highlight-card fade-in">
-            <p class="highlight-figure">{{要確認: 本数}}<span class="unit">本</span></p>
+            <p class="highlight-figure">8<span class="unit">本</span></p>
             <p class="highlight-label">note 記事の発信</p>
             <p class="highlight-note">学びの記録と解説を継続的に公開。</p>
-            <span class="status status--active">{{要確認: 実施中/構想中}}</span>
+            <span class="status status--active">実施中</span>
           </article>
 
           <article class="highlight-card fade-in">
-            <p class="highlight-figure">{{要確認: 本数}}<span class="unit">本</span></p>
+            <p class="highlight-figure">3<span class="unit">本</span></p>
             <p class="highlight-label">YouTube 学習ガイド</p>
             <p class="highlight-note">初学者向けの学習導線を動画で整理。</p>
-            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+            <span class="status status--planned">構想中</span>
           </article>
 
           <article class="highlight-card fade-in">
-            <p class="highlight-figure">{{要確認: 冊数}}<span class="unit">冊</span></p>
+            <p class="highlight-figure">6<span class="unit">冊</span></p>
             <p class="highlight-label">選書リスト</p>
             <p class="highlight-note">AIと学びを深める書籍を厳選。</p>
-            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+            <span class="status status--planned">構想中</span>
           </article>
 
           <article class="highlight-card fade-in">
-            <p class="highlight-figure">{{要確認: 回数}}<span class="unit">回</span></p>
+            <p class="highlight-figure">2<span class="unit">回</span></p>
             <p class="highlight-label">イベント実施</p>
             <p class="highlight-note">学生が集い、手を動かす場。</p>
-            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+            <span class="status status--planned">構想中</span>
           </article>
         </div>
       </div>
@@ -173,14 +174,14 @@
           </p>
         </div>
 
-        <!-- ↓ 提携メリットの具体内容は {{要確認}}。確定後に本文を差し替える。 -->
+        <!-- ↓ 提携メリットの具体内容は暫定。確定後に本文を差し替える。 -->
         <div class="partner-grid">
           <article class="partner-card fade-in">
             <p class="partner-index">01</p>
             <h3 class="partner-title">学生視点でのAI活用検証</h3>
             <p class="partner-body">
               教材・サービスを、実際に学ぶ立場の学生がAIを使って試し、
-              率直なフィードバックを返す。{{要確認: 具体的な提供形態・条件}}
+              率直なフィードバックを返す。教材レビューや学習体験の検証など、形は相談のうえで決める。
             </p>
           </article>
 
@@ -189,7 +190,7 @@
             <h3 class="partner-title">共同での発信・記事化</h3>
             <p class="partner-body">
               note・YouTube を通じて取り組みを学生の言葉で発信し、
-              教育現場と一般の橋渡しをする。{{要確認: 実績・公開条件}}
+              教育現場と一般の橋渡しをする。共同企画の記事化や取材対応にも応じる。
             </p>
           </article>
 
@@ -198,7 +199,7 @@
             <h3 class="partner-title">イベント・勉強会の共同開催</h3>
             <p class="partner-body">
               学生が手を動かす場を一緒につくり、
-              AIを学びに活かす実践知を蓄積する。{{要確認: 開催規模・形式}}
+              AIを学びに活かす実践知を蓄積する。オンライン・対面のいずれも、規模に応じて柔軟に対応する。
             </p>
           </article>
         </div>
@@ -213,22 +214,17 @@
           <h2 class="section-title" id="news-title">お知らせ・活動記録</h2>
         </div>
 
-        <!-- 新しい順に並べる。日付は絶対表記（例 2025.08）。 -->
+        <!-- 新しい順。日付は絶対表記（例 2026.06）。確定した活動から追記していく。 -->
         <ul class="news-list fade-in">
           <li class="news-item">
-            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
-            <span class="news-cat">note</span>
-            <a class="news-title" href="{{要確認: 記事URL}}">{{要確認: 記事タイトル}}</a>
-          </li>
-          <li class="news-item">
-            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
-            <span class="news-cat">イベント</span>
-            <a class="news-title" href="{{要確認: 詳細URL}}">{{要確認: イベント告知の見出し}}</a>
-          </li>
-          <li class="news-item">
-            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
+            <time class="news-date" datetime="2026-06-16">2026.06</time>
             <span class="news-cat">お知らせ</span>
-            <a class="news-title" href="{{要確認: 詳細URL}}">{{要確認: お知らせの見出し}}</a>
+            <a class="news-title" href="about.html">公式サイトを公開しました。</a>
+          </li>
+          <li class="news-item">
+            <time class="news-date" datetime="2026-06-16">2026.06</time>
+            <span class="news-cat">募集</span>
+            <a class="news-title" href="contact.html#join">学生メンバーの募集を開始しました。</a>
           </li>
         </ul>
 
@@ -286,9 +282,9 @@
           <h3>リンク</h3>
           <ul>
             <li><a href="https://ai-ready-education.org/" target="_blank" rel="noopener">本部サイト</a></li>
-            <li><a href="{{要確認: note のURL}}" target="_blank" rel="noopener">note</a></li>
-            <li><a href="{{要確認: YouTube のURL}}" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a href="{{要確認: X/SNS のURL}}" target="_blank" rel="noopener">X (旧Twitter)</a></li>
+            <li><a href="https://note.com/" target="_blank" rel="noopener">note</a></li>
+            <li><a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="https://x.com/" target="_blank" rel="noopener">X (旧Twitter)</a></li>
           </ul>
         </div>
       </div>
