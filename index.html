@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <!-- =====================================================================
-  BASE_URL（公開先・未確定）: 確定後に下記トークンを実URLへ一括置換する。
-    {{BASE_URL}}
-    例A) https://gakuseibu.ai-ready-education.org   （独立サブドメイン）
-    例B) https://<org-or-user>.github.io/gakuseibu  （プロジェクトページ）
-  運用ルール:
-    - canonical / og:url / og:image / JSON-LD の url・logo は {{BASE_URL}} を参照。
-    - ページ内リンク・アセットはルート相対パス（/css/... , /activities.html）で記述。
-    - {{要確認: ◯◯}} は事実未確定の箇所。公開前にすべて実値へ置換する。
-  ※ 例B（github.io サブパス）で公開する場合のみ、ルート相対パスを basePath 付きに調整する。
+  公開先（確定）: GitHub Pages プロジェクトページ（案B）
+    https://shunta-tf.github.io/ai_ready_stu/
+  パス方針: プロジェクトページはサブパス配下のため、ページ内リンク・アセットは
+    「ルート相対(/...)」ではなく「相対パス(css/... , activities.html)」で記述する。
+    （/css/... と書くと shunta-tf.github.io 直下を見て 404 になる）
+  絶対URL: canonical / og:url / og:image / JSON-LD は下記 BASE を直書きする。
+    BASE = https://shunta-tf.github.io/ai_ready_stu
+  {{要確認: ◯◯}} は事実未確定の箇所。公開前に実値へ置換する（現状はプレースホルダ表示）。
 ===================================================================== -->
 <html lang="ja">
 <head>
@@ -17,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AI教育推進機構 学生部の公式サイト。AIを手段に、学生が挑戦し成長する実践コミュニティ。note・学習ガイド・選書・イベントの実績と、提携・参加のご案内。">
   <title>AI教育推進機構 学生部 ｜ AIを手段に、学生が挑戦し成長する実践コミュニティ</title>
-  <link rel="canonical" href="{{BASE_URL}}/">
+  <link rel="canonical" href="https://shunta-tf.github.io/ai_ready_stu/">
 
   <!-- OGP / Twitter Card -->
   <meta property="og:type" content="website">
@@ -25,19 +24,19 @@
   <meta property="og:locale" content="ja_JP">
   <meta property="og:title" content="AI教育推進機構 学生部">
   <meta property="og:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。提携・参加のご案内はこちら。">
-  <meta property="og:url" content="{{BASE_URL}}/">
-  <meta property="og:image" content="{{BASE_URL}}/images/hero/ogp.jpg"><!-- {{要確認: OGP画像 1200x630}} -->
+  <meta property="og:url" content="https://shunta-tf.github.io/ai_ready_stu/">
+  <meta property="og:image" content="https://shunta-tf.github.io/ai_ready_stu/images/hero/ogp.jpg"><!-- {{要確認: OGP画像 1200x630}} -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI教育推進機構 学生部">
   <meta name="twitter:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。">
-  <meta name="twitter:image" content="{{BASE_URL}}/images/hero/ogp.jpg">
+  <meta name="twitter:image" content="https://shunta-tf.github.io/ai_ready_stu/images/hero/ogp.jpg">
 
   <!-- フォント: Inter（見出し/英字）+ Noto Sans JP（本文） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- 構造化データ: EducationalOrganization（本部を parentOrganization に） -->
   <script type="application/ld+json">
@@ -45,8 +44,8 @@
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": "AI教育推進機構 学生部",
-    "url": "{{BASE_URL}}/",
-    "logo": "{{BASE_URL}}/images/logo.png",
+    "url": "https://shunta-tf.github.io/ai_ready_stu/",
+    "logo": "https://shunta-tf.github.io/ai_ready_stu/images/logo.png",
     "description": "AIを手段に、学生が挑戦し成長する実践コミュニティ。",
     "parentOrganization": {
       "@type": "Organization",
@@ -68,7 +67,7 @@
   <!-- ===================== ヘッダー / ナビ ===================== -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="/" aria-label="AI教育推進機構 学生部 トップへ">
+      <a class="brand" href="index.html" aria-label="AI教育推進機構 学生部 トップへ">
         <span class="brand-name">AI教育推進機構 学生部</span>
         <span class="brand-sub">AI Ready Education — Student Division</span>
       </a>
@@ -79,11 +78,11 @@
 
       <nav class="nav" id="primary-nav" aria-label="グローバルナビゲーション">
         <ul class="nav-list">
-          <li><a class="nav-link" href="/activities.html">活動・実績</a></li>
-          <li><a class="nav-link" href="/about.html">私たちについて</a></li>
-          <li><a class="nav-link" href="/members.html">体制</a></li>
+          <li><a class="nav-link" href="activities.html">活動・実績</a></li>
+          <li><a class="nav-link" href="about.html">私たちについて</a></li>
+          <li><a class="nav-link" href="members.html">体制</a></li>
         </ul>
-        <a class="btn btn-primary nav-cta" href="/contact.html">お問い合わせ</a>
+        <a class="btn btn-primary nav-cta" href="contact.html">お問い合わせ</a>
       </nav>
     </div>
   </header>
@@ -94,9 +93,9 @@
     <section class="hero" aria-label="イントロダクション">
       <!-- 画像は /images/hero/ に配置（未配置時は濃紺の単色背景で代替） -->
       <div class="hero-slideshow" aria-hidden="true">
-        <div class="hero-slide is-active" style="background-image:url('/images/hero/hero-1.jpg');"></div>
-        <div class="hero-slide" style="background-image:url('/images/hero/hero-2.jpg');"></div>
-        <div class="hero-slide" style="background-image:url('/images/hero/hero-3.jpg');"></div>
+        <div class="hero-slide is-active" style="background-image:url('images/hero/hero-1.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('images/hero/hero-2.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('images/hero/hero-3.jpg');"></div>
       </div>
       <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -109,8 +108,8 @@
             note・学習ガイド・選書・イベントを通じて、学生が学び合い挑戦できる実践の場を育てている。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="/contact.html">連携・お問い合わせ</a>
-            <a class="btn btn-ghost" href="/activities.html">活動・実績を見る</a>
+            <a class="btn btn-primary" href="contact.html">連携・お問い合わせ</a>
+            <a class="btn btn-ghost" href="activities.html">活動・実績を見る</a>
           </div>
         </div>
       </div>
@@ -234,7 +233,7 @@
         </ul>
 
         <div class="news-more">
-          <a class="btn btn-ghost" href="/activities.html">活動・実績をすべて見る</a>
+          <a class="btn btn-ghost" href="activities.html">活動・実績をすべて見る</a>
         </div>
       </div>
     </section>
@@ -252,8 +251,8 @@
             </p>
           </div>
           <div class="cta-actions fade-in">
-            <a class="btn btn-primary" href="/contact.html">お問い合わせ・連携相談</a>
-            <a class="btn btn-ghost" href="/contact.html#join">メンバー募集を見る</a>
+            <a class="btn btn-primary" href="contact.html">お問い合わせ・連携相談</a>
+            <a class="btn btn-ghost" href="contact.html#join">メンバー募集を見る</a>
           </div>
         </div>
       </div>
@@ -276,10 +275,10 @@
         <div class="footer-col">
           <h3>サイトマップ</h3>
           <ul>
-            <li><a href="/activities.html">活動・実績</a></li>
-            <li><a href="/about.html">私たちについて</a></li>
-            <li><a href="/members.html">体制</a></li>
-            <li><a href="/contact.html">お問い合わせ</a></li>
+            <li><a href="activities.html">活動・実績</a></li>
+            <li><a href="about.html">私たちについて</a></li>
+            <li><a href="members.html">体制</a></li>
+            <li><a href="contact.html">お問い合わせ</a></li>
           </ul>
         </div>
 
@@ -301,6 +300,6 @@
     </div>
   </footer>
 
-  <script src="/js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
