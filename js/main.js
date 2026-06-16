@@ -1,0 +1,191 @@
+/* =====================================================================
+   AI教育推進機構 学生部 公式サイト  共通スクリプト
+   - 依存なしの素の JS。全ページで読み込む。
+   - 機能: ページfade-in / 固定ヘッダーのscrolled切替 / ハンバーガー開閉 /
+     IntersectionObserver による .fade-in / ヒーロースライドショー /
+     アクティブナビ判定。
+   - prefers-reduced-motion を尊重する。
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  var prefersReduced =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- 1. ページ fade-in ---------------------------------------- */
+  function pageFadeIn() {
+    // requestAnimationFrame で初期描画後に loaded を付与
+    requestAnimationFrame(function () {
+      document.body.classList.add("loaded");
+    });
+  }
+
+  /* ---- 2. 固定ヘッダーの scrolled 切替 -------------------------- */
+  function initHeaderScroll() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var threshold = 24;
+    var ticking = false;
+
+    function update() {
+      if (window.scrollY > threshold) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+  }
+
+  /* ---- 3. ハンバーガー開閉 -------------------------------------- */
+  function initNavToggle() {
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.querySelector(".nav");
+    if (!toggle || !nav) return;
+
+    function setOpen(open) {
+      nav.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      // 状態に合わせてアクセシブルネームも切り替える
+      toggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+      document.body.classList.toggle("nav-open", open);
+    }
+
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") !== "true";
+      setOpen(open);
+    });
+
+    // メニュー内リンクで閉じる
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setOpen(false);
+    });
+
+    // Esc で閉じる
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // デスクトップに戻ったらリセット
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 768) setOpen(false);
+    });
+  }
+
+  /* ---- 4. IntersectionObserver による .fade-in ------------------ */
+  function initReveal() {
+    var els = document.querySelectorAll(".fade-in");
+    if (!els.length) return;
+
+    if (prefersReduced || !("IntersectionObserver" in window)) {
+      els.forEach(function (el) { el.classList.add("is-visible"); });
+      return;
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---- 5. ヒーロースライドショー -------------------------------- */
+  function initHeroSlideshow() {
+    var slideshow = document.querySelector(".hero-slideshow");
+    if (!slideshow) return;
+    var slides = slideshow.querySelectorAll(".hero-slide");
+    if (slides.length < 2) return;       // 1枚以下なら何もしない
+    if (prefersReduced) return;          // モーション抑制時は固定
+
+    var i = 0;
+    var interval = 6000;
+    var timer = null;
+    var onScreen = true;
+
+    function advance() {
+      slides[i].classList.remove("is-active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("is-active");
+    }
+    function start() {
+      if (timer === null && onScreen && !document.hidden) {
+        timer = window.setInterval(advance, interval);
+      }
+    }
+    function stop() {
+      if (timer !== null) { window.clearInterval(timer); timer = null; }
+    }
+
+    // 画面外ではタイマーを止める（オフスクリーンの無駄な合成/描画を避ける）
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          onScreen = e.isIntersecting;
+          if (onScreen) start(); else stop();
+        });
+      }, { threshold: 0.05 });
+      io.observe(slideshow);
+    } else {
+      start();
+    }
+
+    // 非アクティブタブでも止める。復帰時は可視なら再開
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop(); else start();
+    });
+  }
+
+  /* ---- 6. アクティブナビ判定 ------------------------------------ */
+  function initActiveNav() {
+    var links = document.querySelectorAll(".nav-link");
+    if (!links.length) return;
+
+    // 現在ファイル名（index.html 既定）
+    var path = window.location.pathname.split("/").pop() || "index.html";
+
+    links.forEach(function (link) {
+      var href = (link.getAttribute("href") || "").split("/").pop();
+      // ルート相対 "/" や "" は index 扱い
+      if (href === "" || href === "/") href = "index.html";
+      if (href === path) {
+        link.classList.add("is-active");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  }
+
+  /* ---- 起動 ----------------------------------------------------- */
+  function init() {
+    pageFadeIn();
+    initHeaderScroll();
+    initNavToggle();
+    initReveal();
+    initHeroSlideshow();
+    initActiveNav();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

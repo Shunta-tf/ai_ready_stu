@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!-- =====================================================================
+  BASE_URL（公開先・未確定）: 確定後に下記トークンを実URLへ一括置換する。
+    {{BASE_URL}}
+    例A) https://gakuseibu.ai-ready-education.org   （独立サブドメイン）
+    例B) https://<org-or-user>.github.io/gakuseibu  （プロジェクトページ）
+  運用ルール:
+    - canonical / og:url / og:image / JSON-LD の url・logo は {{BASE_URL}} を参照。
+    - ページ内リンク・アセットはルート相対パス（/css/... , /activities.html）で記述。
+    - {{要確認: ◯◯}} は事実未確定の箇所。公開前にすべて実値へ置換する。
+  ※ 例B（github.io サブパス）で公開する場合のみ、ルート相対パスを basePath 付きに調整する。
+===================================================================== -->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="{{要確認: Search Console 検証コード}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI教育推進機構 学生部の公式サイト。AIを手段に、学生が挑戦し成長する実践コミュニティ。note・学習ガイド・選書・イベントの実績と、提携・参加のご案内。">
+  <title>AI教育推進機構 学生部 ｜ AIを手段に、学生が挑戦し成長する実践コミュニティ</title>
+  <link rel="canonical" href="{{BASE_URL}}/">
+
+  <!-- OGP / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI教育推進機構 学生部">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:title" content="AI教育推進機構 学生部">
+  <meta property="og:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。提携・参加のご案内はこちら。">
+  <meta property="og:url" content="{{BASE_URL}}/">
+  <meta property="og:image" content="{{BASE_URL}}/images/hero/ogp.jpg"><!-- {{要確認: OGP画像 1200x630}} -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI教育推進機構 学生部">
+  <meta name="twitter:description" content="AIを手段に、学生が挑戦し成長する実践コミュニティ。">
+  <meta name="twitter:image" content="{{BASE_URL}}/images/hero/ogp.jpg">
+
+  <!-- フォント: Inter（見出し/英字）+ Noto Sans JP（本文） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- 構造化データ: EducationalOrganization（本部を parentOrganization に） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "AI教育推進機構 学生部",
+    "url": "{{BASE_URL}}/",
+    "logo": "{{BASE_URL}}/images/logo.png",
+    "description": "AIを手段に、学生が挑戦し成長する実践コミュニティ。",
+    "parentOrganization": {
+      "@type": "Organization",
+      "name": "AI教育推進機構",
+      "url": "https://ai-ready-education.org/"
+    },
+    "sameAs": [
+      "{{要確認: note のURL}}",
+      "{{要確認: YouTube のURL}}",
+      "{{要確認: X/SNS のURL}}"
+    ]
+  }
+  </script>
+</head>
+
+<body class="home-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ===================== ヘッダー / ナビ ===================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="AI教育推進機構 学生部 トップへ">
+        <span class="brand-name">AI教育推進機構 学生部</span>
+        <span class="brand-sub">AI Ready Education — Student Division</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="primary-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="グローバルナビゲーション">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/activities.html">活動・実績</a></li>
+          <li><a class="nav-link" href="/about.html">私たちについて</a></li>
+          <li><a class="nav-link" href="/members.html">体制</a></li>
+        </ul>
+        <a class="btn btn-primary nav-cta" href="/contact.html">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== ヒーロー ===================== -->
+    <section class="hero" aria-label="イントロダクション">
+      <!-- 画像は /images/hero/ に配置（未配置時は濃紺の単色背景で代替） -->
+      <div class="hero-slideshow" aria-hidden="true">
+        <div class="hero-slide is-active" style="background-image:url('/images/hero/hero-1.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('/images/hero/hero-2.jpg');"></div>
+        <div class="hero-slide" style="background-image:url('/images/hero/hero-3.jpg');"></div>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <p class="eyebrow">Student Division — AI Ready Education</p>
+          <h1 class="hero-title">AIを手段に、<br><span class="accent-line">学生が挑戦する</span>場をつくる。</h1>
+          <p class="hero-lead">
+            私たちは、AI教育推進機構の学生組織。AIを目的ではなく手段として捉え、
+            note・学習ガイド・選書・イベントを通じて、学生が学び合い挑戦できる実践の場を育てている。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/contact.html">連携・お問い合わせ</a>
+            <a class="btn btn-ghost" href="/activities.html">活動・実績を見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 実績ハイライト（動いている事実） ===================== -->
+    <section class="section" aria-labelledby="highlights-title">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">What we do</p>
+          <h2 class="section-title" id="highlights-title">いま、動いている事実</h2>
+          <p class="section-lead">
+            設立間もない団体として、累積を盛らず、実際に動いている活動で勢いを示す。
+            各活動の成熟度は「実施中／構想中」で明示する。
+          </p>
+        </div>
+
+        <!-- 状態(status)の色: 実施中 = .status--active（コーラル） / 構想中 = .status--planned（無彩・枠線）。
+             数値・状態は事実確定後に置換する。 -->
+        <div class="highlight-grid">
+          <article class="highlight-card fade-in">
+            <p class="highlight-figure">{{要確認: 本数}}<span class="unit">本</span></p>
+            <p class="highlight-label">note 記事の発信</p>
+            <p class="highlight-note">学びの記録と解説を継続的に公開。</p>
+            <span class="status status--active">{{要確認: 実施中/構想中}}</span>
+          </article>
+
+          <article class="highlight-card fade-in">
+            <p class="highlight-figure">{{要確認: 本数}}<span class="unit">本</span></p>
+            <p class="highlight-label">YouTube 学習ガイド</p>
+            <p class="highlight-note">初学者向けの学習導線を動画で整理。</p>
+            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+          </article>
+
+          <article class="highlight-card fade-in">
+            <p class="highlight-figure">{{要確認: 冊数}}<span class="unit">冊</span></p>
+            <p class="highlight-label">選書リスト</p>
+            <p class="highlight-note">AIと学びを深める書籍を厳選。</p>
+            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+          </article>
+
+          <article class="highlight-card fade-in">
+            <p class="highlight-figure">{{要確認: 回数}}<span class="unit">回</span></p>
+            <p class="highlight-label">イベント実施</p>
+            <p class="highlight-note">学生が集い、手を動かす場。</p>
+            <span class="status status--planned">{{要確認: 実施中/構想中}}</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 連携でできること（提携メリット3点） ===================== -->
+    <section class="section section--alt" aria-labelledby="partner-title">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">For partners</p>
+          <h2 class="section-title" id="partner-title">学生部と連携でできること</h2>
+          <p class="section-lead">
+            「この学生部と組むと何ができるか」を具体で示す。
+            以下はたたき台であり、提携の形は相談のうえで決めたい。
+          </p>
+        </div>
+
+        <!-- ↓ 提携メリットの具体内容は {{要確認}}。確定後に本文を差し替える。 -->
+        <div class="partner-grid">
+          <article class="partner-card fade-in">
+            <p class="partner-index">01</p>
+            <h3 class="partner-title">学生視点でのAI活用検証</h3>
+            <p class="partner-body">
+              教材・サービスを、実際に学ぶ立場の学生がAIを使って試し、
+              率直なフィードバックを返す。{{要確認: 具体的な提供形態・条件}}
+            </p>
+          </article>
+
+          <article class="partner-card fade-in">
+            <p class="partner-index">02</p>
+            <h3 class="partner-title">共同での発信・記事化</h3>
+            <p class="partner-body">
+              note・YouTube を通じて取り組みを学生の言葉で発信し、
+              教育現場と一般の橋渡しをする。{{要確認: 実績・公開条件}}
+            </p>
+          </article>
+
+          <article class="partner-card fade-in">
+            <p class="partner-index">03</p>
+            <h3 class="partner-title">イベント・勉強会の共同開催</h3>
+            <p class="partner-body">
+              学生が手を動かす場を一緒につくり、
+              AIを学びに活かす実践知を蓄積する。{{要確認: 開催規模・形式}}
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== News（新しい順） ===================== -->
+    <section class="section" aria-labelledby="news-title">
+      <div class="container">
+        <div class="section-header fade-in">
+          <p class="section-label">News</p>
+          <h2 class="section-title" id="news-title">お知らせ・活動記録</h2>
+        </div>
+
+        <!-- 新しい順に並べる。日付は絶対表記（例 2025.08）。 -->
+        <ul class="news-list fade-in">
+          <li class="news-item">
+            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
+            <span class="news-cat">note</span>
+            <a class="news-title" href="{{要確認: 記事URL}}">{{要確認: 記事タイトル}}</a>
+          </li>
+          <li class="news-item">
+            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
+            <span class="news-cat">イベント</span>
+            <a class="news-title" href="{{要確認: 詳細URL}}">{{要確認: イベント告知の見出し}}</a>
+          </li>
+          <li class="news-item">
+            <time class="news-date" datetime="{{要確認: YYYY-MM-DD}}">{{要確認: 2025.MM}}</time>
+            <span class="news-cat">お知らせ</span>
+            <a class="news-title" href="{{要確認: 詳細URL}}">{{要確認: お知らせの見出し}}</a>
+          </li>
+        </ul>
+
+        <div class="news-more">
+          <a class="btn btn-ghost" href="/activities.html">活動・実績をすべて見る</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CTA（お問い合わせ） ===================== -->
+    <section class="section cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-inner">
+          <div class="fade-in">
+            <p class="eyebrow">Get in touch</p>
+            <h2 class="section-title" id="cta-title">連携・参加のご相談</h2>
+            <p class="cta-lead">
+              提携・取材のご相談も、学生メンバーとしての参加も歓迎する。
+              小さな相談からで構わない。まずは気軽にお問い合わせください。
+            </p>
+          </div>
+          <div class="cta-actions fade-in">
+            <a class="btn btn-primary" href="/contact.html">お問い合わせ・連携相談</a>
+            <a class="btn btn-ghost" href="/contact.html#join">メンバー募集を見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== フッター（3カラム） ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <span class="brand-name">AI教育推進機構 学生部</span>
+          <p class="footer-tagline">
+            AIを手段に、学生が挑戦し成長する実践コミュニティ。
+            AI教育推進機構の下位ブランドとして活動している。
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h3>サイトマップ</h3>
+          <ul>
+            <li><a href="/activities.html">活動・実績</a></li>
+            <li><a href="/about.html">私たちについて</a></li>
+            <li><a href="/members.html">体制</a></li>
+            <li><a href="/contact.html">お問い合わせ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>リンク</h3>
+          <ul>
+            <li><a href="https://ai-ready-education.org/" target="_blank" rel="noopener">本部サイト</a></li>
+            <li><a href="{{要確認: note のURL}}" target="_blank" rel="noopener">note</a></li>
+            <li><a href="{{要確認: YouTube のURL}}" target="_blank" rel="noopener">YouTube</a></li>
+            <li><a href="{{要確認: X/SNS のURL}}" target="_blank" rel="noopener">X (旧Twitter)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 AI教育推進機構 学生部</span>
+        <a href="https://ai-ready-education.org/" target="_blank" rel="noopener">AI教育推進機構（本部）</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
