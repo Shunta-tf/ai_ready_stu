@@ -8,3 +8,7 @@ desktop.ini
 # ログ・一時
 *.log
 .tmp/
+
+# ブラウザ確認の一時生成物
+.playwright-mcp/
+about-top.jpeg
