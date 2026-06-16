@@ -173,6 +173,81 @@
     });
   }
 
+  /* ---- 7. 問い合わせフォームのバリデーション -------------------- */
+  function initContactForm() {
+    var form = document.querySelector("[data-contact-form]");
+    if (!form) return;
+    var status = form.querySelector("[data-form-status]");
+    var fields = form.querySelectorAll("[data-validate]");
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function errorEl(field) {
+      var row = field.closest(".form-row");
+      return row ? row.querySelector(".form-error") : null;
+    }
+    function setError(field, msg) {
+      field.setAttribute("aria-invalid", "true");
+      var err = errorEl(field);
+      if (err) err.textContent = msg;
+    }
+    function clearError(field) {
+      field.removeAttribute("aria-invalid");
+      var err = errorEl(field);
+      if (err) err.textContent = "";
+    }
+    function validateField(field) {
+      var val = (field.value || "").trim();
+      if (field.hasAttribute("required") && !val) {
+        setError(field, field.getAttribute("data-msg-required") || "入力してください。");
+        return false;
+      }
+      if (field.type === "email" && val && !emailRe.test(val)) {
+        setError(field, "メールアドレスの形式が正しくありません。");
+        return false;
+      }
+      clearError(field);
+      return true;
+    }
+
+    Array.prototype.forEach.call(fields, function (f) {
+      f.addEventListener("blur", function () { validateField(f); });
+      f.addEventListener("input", function () {
+        if (f.getAttribute("aria-invalid") === "true") validateField(f);
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      var ok = true;
+      var firstInvalid = null;
+      Array.prototype.forEach.call(fields, function (f) {
+        if (!validateField(f)) { ok = false; if (!firstInvalid) firstInvalid = f; }
+      });
+
+      if (!ok) {
+        e.preventDefault();
+        if (status) {
+          status.textContent = "未入力または形式に誤りのある項目があります。修正してください。";
+          status.hidden = false;
+        }
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      // 送信先が未設定（プレースホルダ）の場合はネイティブ送信せず案内する
+      var action = form.getAttribute("action") || "";
+      if (action === "" || action === "#" || action.indexOf("{{") !== -1) {
+        e.preventDefault();
+        if (status) {
+          status.textContent =
+            "送信ありがとうございます。現在フォーム送信先を準備中のため、お手数ですが記載のメール宛にご連絡ください。";
+          status.hidden = false;
+          status.focus && status.focus();
+        }
+      }
+      // 実エンドポイント設定後はそのまま action へ送信される
+    });
+  }
+
   /* ---- 起動 ----------------------------------------------------- */
   function init() {
     pageFadeIn();
@@ -181,6 +256,7 @@
     initReveal();
     initHeroSlideshow();
     initActiveNav();
+    initContactForm();
   }
 
   if (document.readyState === "loading") {

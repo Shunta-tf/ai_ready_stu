@@ -45,16 +45,21 @@ python -m http.server 8000   # → http://localhost:8000/
 
 ```
 index.html            トップ（ヒーロー / 実績ハイライト / 連携メリット / News / CTA）
-about.html            私たちについて        ※未作成
-activities.html       活動・実績【中心】     ※未作成
-members.html          体制・メンバー        ※未作成
-contact.html          お問い合わせ・参加     ※未作成
+about.html            私たちについて（理念 / 価値観3つ / 設立背景 / 目指す姿）
+activities.html       活動・実績【中心】（実績 / note・YouTube・選書・イベント / News）
+members.html          体制・メンバー（運営学生 / 支援体制 / 本部との関係）
+contact.html          お問い合わせ・参加（窓口 / 連携メリット / フォーム）
 css/style.css         全ページ共通スタイル（:root にデザイントークン）
-js/main.js            全ページ共通スクリプト
+js/main.js            全ページ共通スクリプト（フォームのバリデーション含む）
+sitemap.xml           SEO（全ページ。Search Console に登録して使う）
+robots.txt            SEO（※プロジェクトページではドメイン直下の robots.txt が優先される点に注意）
 images/hero/          ヒーロー画像（ASCIIパス・JPEG。未配置時は濃紺背景で代替）
 images/activities/    実績・イベント写真
-images/members/       メンバー写真
+images/members/       メンバー写真（掲載は本人の許諾必須）
 ```
+
+> ページを追加・改名したら、全ページのナビ／フッターと `sitemap.xml` も更新する。
+> 問い合わせフォームは送信先（Formspree等）が未設定の間は送信されず、メール連絡を案内する。
 
 ## 編集時の注意（重要）
 
