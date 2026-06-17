@@ -25,14 +25,17 @@
   --header-height: 72px;
   --section-pad:   72px 0;
   --max-width:     1200px;
-  --radius:        6px;
-  --radius-sm:     4px;
+  --radius:        14px;      /* カードなど（親しみのある角丸） */
+  --radius-sm:     8px;       /* 入力・小要素 */
+  --radius-pill:   999px;     /* ボタン・バッジ（ポップ） */
   --shadow:        0 1px 2px rgba(15,40,65,0.04), 0 4px 14px rgba(15,40,65,0.06);
   --shadow-hover:  0 2px 6px rgba(15,40,65,0.06), 0 14px 30px rgba(15,40,65,0.10);
 
   /* 補助トークン（直値の手打ちを避けるための追加変数） */
   --overlay:        rgba(13,30,50,0.60);  /* ヒーロー暗オーバーレイ（フラット・濃紺） */
   --header-bg:      rgba(255,255,255,0.85);
+  --sky:            #e3f0fb;  /* 明るい水色（ヒーロー/CTAの背景・ポップ） */
+  --sky-tag:        #d7e9f8;  /* 水色チップ */
   /* 暗い面（ヒーロー/CTA）上のテキスト・罫線。白も直値にせずトークン化 */
   --on-dark:        #ffffff;
   --on-dark-strong: rgba(255,255,255,0.90);
@@ -204,8 +207,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1;
-  padding: 14px 26px;
-  border-radius: var(--radius);
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   cursor: pointer;
   transition: transform var(--t-base) var(--ease),
@@ -237,18 +240,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   transform: translateY(-2px);
 }
 
-/* 暗背景（ヒーロー / CTA帯）上のゴーストボタンは白文字・白枠に */
-.hero .btn-ghost,
-.cta .btn-ghost {
-  color: var(--on-dark);
-  border-color: var(--on-dark-border);
-}
-.hero .btn-ghost:hover,
-.cta .btn-ghost:hover {
-  color: var(--on-dark);
-  border-color: var(--on-dark);
-}
-
 /* ---------------------------------------------------------------------
    5. ヘッダー / ナビ
    --------------------------------------------------------------------- */
@@ -268,15 +259,8 @@ ul { margin: 0; padding: 0; list-style: none; }
               border-color var(--t-base) var(--ease),
               box-shadow var(--t-base) var(--ease);
 }
-/* スクロール時に影を足す */
+/* スクロール時に影を足す（ヒーローも明色のため、ヘッダーは常にソリッド白） */
 .site-header.scrolled { box-shadow: var(--shadow); }
-/* トップのヒーロー上では、スクロール前のみ透明にする */
-.home-page .site-header:not(.scrolled) {
-  background-color: transparent;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  border-bottom-color: transparent;
-}
 
 .header-inner {
   width: 100%;
@@ -306,10 +290,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   letter-spacing: 0.04em;
   color: var(--text-muted);
 }
-/* ヒーロー上（透明ヘッダー）はロゴを白に */
-.home-page .site-header:not(.scrolled) .brand,
-.home-page .site-header:not(.scrolled) .brand-name { color: var(--on-dark); }
-.home-page .site-header:not(.scrolled) .brand-sub { color: var(--on-dark-mute); }
 
 .nav { display: flex; align-items: center; gap: 8px; }
 .nav-list {
@@ -325,9 +305,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 500;
   color: var(--text-primary);
 }
-.home-page .site-header:not(.scrolled) .nav-link { color: var(--on-dark-strong); }
 
-/* ホバー/アクティブで下にコーラル線が出現（scaleXでレイアウト不動） */
+/* ホバー/アクティブで下にブルー線が出現（scaleXでレイアウト不動） */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -339,13 +318,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: transform var(--t-base) var(--ease);
 }
 .nav-link:hover { color: var(--accent); }
-.home-page .site-header:not(.scrolled) .nav-link:hover { color: var(--on-dark); }
 .nav-link:hover::after,
 .nav-link.is-active::after { transform: scaleX(1); }
 .nav-link.is-active { color: var(--accent); }
-.home-page .site-header:not(.scrolled) .nav-link.is-active { color: var(--on-dark); }
 
-/* お問い合わせ = コーラルCTA */
+/* お問い合わせ = ブルーのCTAボタン */
 .nav-cta {
   margin-left: 8px;
   padding: 10px 20px;
@@ -372,7 +349,6 @@ ul { margin: 0; padding: 0; list-style: none; }
               opacity var(--t-fast) var(--ease);
 }
 .nav-toggle span + span { margin-top: 6px; }
-.home-page .site-header:not(.scrolled) .nav-toggle span { background-color: var(--on-dark); }
 .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -382,12 +358,12 @@ ul { margin: 0; padding: 0; list-style: none; }
    --------------------------------------------------------------------- */
 .hero {
   position: relative;
-  min-height: 92vh;
-  min-height: 92dvh;          /* モバイルのアドレスバー変動に追従 */
+  min-height: 74vh;
+  min-height: 74dvh;          /* モバイルのアドレスバー変動に追従 */
   display: flex;
   align-items: center;
-  background-color: var(--ink); /* 画像未配置時のフォールバック */
-  color: var(--on-dark);
+  background-color: var(--sky); /* 明るい水色のヒーロー（ポップ） */
+  color: var(--text-primary);
   overflow: hidden;
 }
 .hero-slideshow {
@@ -404,38 +380,49 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: opacity 1200ms var(--ease);
 }
 .hero-slide.is-active { opacity: 1; }
-/* フラットな暗オーバーレイ（グラデではない） */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-overlay);
-  background-color: var(--overlay);
-}
+/* 明るいヒーローでは暗オーバーレイは使わない（画像配置時のみ復活させる） */
+.hero-overlay { display: none; }
 .hero .container { position: relative; z-index: var(--z-content); }
 
-.hero-content { max-width: 720px; padding: calc(var(--header-height) + 32px) 0 32px; }
-.hero .eyebrow { color: var(--on-dark); opacity: 0.85; }
+.hero-content { max-width: 760px; padding: calc(var(--header-height) + 40px) 0 48px; }
+.hero .eyebrow { color: var(--accent); }
 .hero-title {
-  margin-top: 18px;
+  margin-top: 16px;
   font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: var(--on-dark);
+  line-height: 1.18;
+  color: var(--ink);
 }
 .hero-title .accent-line { color: var(--accent); }
 .hero-lead {
   margin-top: 22px;
   font-size: clamp(1rem, 1.6vw, 1.18rem);
-  line-height: 1.9;
-  color: var(--on-dark-strong);
-  max-width: 56ch;
+  line-height: 1.95;
+  color: var(--text-secondary);
+  max-width: 60ch;
 }
 .hero-actions {
-  margin-top: 36px;
+  margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+}
+/* 活動を表す丸い水色タグ（ポップな一目わかる要素） */
+.hero-tags {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hero-tag {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  background-color: var(--sky-tag);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
 }
 
 /* ---------------------------------------------------------------------
@@ -477,10 +464,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .highlight-figure {
   font-family: var(--font-display);
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--accent);                /* 数字はブルーで明るく */
   line-height: 1.1;
   font-variant-numeric: tabular-nums;  /* 数値は等幅で桁を揃える */
 }
@@ -502,16 +489,16 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--text-muted);
 }
 
-/* ステータス：ピル禁止 → radius-sm の小チップ */
+/* ステータス：丸いピル型チップ（ポップ） */
 .status {
   display: inline-block;
   margin-top: 16px;
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
 }
 .status--active {
   color: var(--accent-dark);
@@ -621,8 +608,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   letter-spacing: 0.02em;
   color: var(--accent-dark);
   background-color: var(--accent-soft);
-  padding: 3px 10px;
-  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
   justify-self: start;
 }
 .news-title {
@@ -638,10 +625,10 @@ ul { margin: 0; padding: 0; list-style: none; }
    10. CTA（お問い合わせ）
    --------------------------------------------------------------------- */
 .cta {
-  background-color: var(--ink);
-  color: var(--on-dark);
+  background-color: var(--sky);   /* 明るい水色（重い濃紺をやめる） */
+  color: var(--text-primary);
 }
-.cta .section-title { color: var(--on-dark); }
+.cta .section-title { color: var(--ink); }
 .cta-inner {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -650,7 +637,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .cta-lead {
   margin-top: 18px;
-  color: var(--on-dark-strong);
+  color: var(--text-secondary);
   font-size: 1.05rem;
   max-width: 52ch;
 }
@@ -977,7 +964,6 @@ body.loaded { opacity: 1; }
     border-bottom: 1px solid var(--border);
     color: var(--text-primary);
   }
-  .home-page .site-header:not(.scrolled) .nav-link { color: var(--text-primary); }
   .nav-link::after { left: 4px; right: auto; bottom: auto; top: 50%;
     width: 3px; height: 22px; transform: translateY(-50%) scaleY(0);
     transform-origin: center; }
