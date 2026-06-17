@@ -10,28 +10,29 @@
    1. デザイントークン
    --------------------------------------------------------------------- */
 :root {
-  --bg-primary:    #f7f5ef;   /* 背景・温かいオフホワイト */
-  --bg-secondary:  #efece4;   /* 交互セクション */
+  /* 配色: 本部ロゴ準拠（白基調 × 濃紺 × ロゴ系ブルー）。アクセントはブルー一色 */
+  --bg-primary:    #ffffff;   /* 背景・白 */
+  --bg-secondary:  #eef4f9;   /* 交互セクション（ロゴ水色の薄め） */
   --bg-card:       #ffffff;
-  --ink:           #1a2740;   /* 見出し最濃 */
-  --text-primary:  #22314f;   /* 強めの本文・小見出し（深インディゴ） */
-  --text-secondary:#4a4f57;
-  --text-muted:    #6b7078;
-  --accent:        #e5613c;   /* コーラル・CTAとホバー線にだけ使う */
-  --accent-dark:   #c24a28;   /* hover */
-  --accent-soft:   rgba(229,97,60,0.08);
-  --border:        rgba(26,39,64,0.10);
+  --ink:           #15324f;   /* 見出し最濃（濃紺＝ロゴのライン色） */
+  --text-primary:  #25405f;   /* 強めの本文・小見出し */
+  --text-secondary:#4a5870;
+  --text-muted:    #616b7c;
+  --accent:        #1f6ab0;   /* ロゴ系ブルー・CTAとホバー線にだけ使う */
+  --accent-dark:   #16518a;   /* hover */
+  --accent-soft:   rgba(31,106,176,0.08);
+  --border:        rgba(21,50,79,0.12);
   --header-height: 72px;
   --section-pad:   72px 0;
   --max-width:     1200px;
   --radius:        6px;
   --radius-sm:     4px;
-  --shadow:        0 2px 12px rgba(26,39,64,0.06);
-  --shadow-hover:  0 6px 20px rgba(26,39,64,0.10);
+  --shadow:        0 1px 2px rgba(15,40,65,0.04), 0 4px 14px rgba(15,40,65,0.06);
+  --shadow-hover:  0 2px 6px rgba(15,40,65,0.06), 0 14px 30px rgba(15,40,65,0.10);
 
   /* 補助トークン（直値の手打ちを避けるための追加変数） */
-  --overlay:        rgba(16,24,40,0.62);  /* ヒーロー暗オーバーレイ（フラット） */
-  --header-bg:      rgba(247,245,239,0.88);
+  --overlay:        rgba(13,30,50,0.60);  /* ヒーロー暗オーバーレイ（フラット・濃紺） */
+  --header-bg:      rgba(255,255,255,0.85);
   /* 暗い面（ヒーロー/CTA）上のテキスト・罫線。白も直値にせずトークン化 */
   --on-dark:        #ffffff;
   --on-dark-strong: rgba(255,255,255,0.90);
