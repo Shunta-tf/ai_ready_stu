@@ -237,12 +237,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   transform: translateY(-2px);
 }
 
-/* ヒーロー上（暗背景）のゴーストボタン */
-.hero .btn-ghost {
+/* 暗背景（ヒーロー / CTA帯）上のゴーストボタンは白文字・白枠に */
+.hero .btn-ghost,
+.cta .btn-ghost {
   color: var(--on-dark);
   border-color: var(--on-dark-border);
 }
-.hero .btn-ghost:hover {
+.hero .btn-ghost:hover,
+.cta .btn-ghost:hover {
   color: var(--on-dark);
   border-color: var(--on-dark);
 }
