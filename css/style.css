@@ -1079,6 +1079,13 @@ body.loaded { opacity: 1; }
 
   .partner-grid { grid-template-columns: 1fr; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  /* メンバーカード・記事(ブログ)カードはスマホでも2列を維持する。
+     :has() 非対応の古い端末では自動的に上の1列にフォールバックする。 */
+  .grid:has(.member-card),
+  .grid:has(.article-card) {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
   .checklist { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer-brand { grid-column: 1 / -1; }
