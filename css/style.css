@@ -1027,6 +1027,16 @@ body.loaded { opacity: 1; }
     padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
   }
 
+  /* モバイルでは backdrop-filter を無効化し、ヘッダーを完全な不透明にする。
+     backdrop-filter / filter / transform を持つ要素は子孫の position:fixed の
+     「包含ブロック」になるため、ドロワー(.nav)がヘッダー高さ(72px)に閉じ込められ、
+     メニューの背景が出ず透けて見える不具合を防ぐ。 */
+  .site-header {
+    background-color: var(--bg-primary);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   /* モバイルナビ：右からスライドするパネル */
   .nav-toggle { display: block; z-index: var(--z-nav); }
   .nav {
