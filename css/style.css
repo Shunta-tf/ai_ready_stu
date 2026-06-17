@@ -845,6 +845,37 @@ ul { margin: 0; padding: 0; list-style: none; }
 .article-desc { margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; flex: 1; }
 .article-card .card-foot { margin-top: 16px; }
 
+/* note記事のジャンル見出し（ジャンルごとにグルーピング） */
+.article-group { margin-top: 56px; }
+.article-group:first-of-type { margin-top: 8px; }
+.article-group-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 26px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.article-group-title::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 22px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+}
+.article-group-count {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* 大きめのステートメント（理念など） */
 .statement {
   font-family: var(--font-display);
