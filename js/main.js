@@ -2,8 +2,7 @@
    AI教育推進機構 学生部 公式サイト  共通スクリプト
    - 依存なしの素の JS。全ページで読み込む。
    - 機能: ページfade-in / 固定ヘッダーのscrolled切替 / ハンバーガー開閉 /
-     IntersectionObserver による .fade-in / ヒーロースライドショー /
-     アクティブナビ判定。
+     IntersectionObserver による .fade-in / アクティブナビ判定 / フォーム検証。
    - prefers-reduced-motion を尊重する。
    ===================================================================== */
 (function () {
@@ -58,6 +57,12 @@
       // 状態に合わせてアクセシブルネームも切り替える
       toggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
       document.body.classList.toggle("nav-open", open);
+      // ドロワー展開中は背面コンテンツをフォーカス・支援技術から外す
+      // （inert 未対応の古い環境では従来どおり＝悪化はしない）
+      var main = document.querySelector("main");
+      var footer = document.querySelector(".site-footer");
+      if (main) main.inert = open;
+      if (footer) footer.inert = open;
     }
 
     toggle.addEventListener("click", function () {
@@ -108,53 +113,7 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---- 5. ヒーロースライドショー -------------------------------- */
-  function initHeroSlideshow() {
-    var slideshow = document.querySelector(".hero-slideshow");
-    if (!slideshow) return;
-    var slides = slideshow.querySelectorAll(".hero-slide");
-    if (slides.length < 2) return;       // 1枚以下なら何もしない
-    if (prefersReduced) return;          // モーション抑制時は固定
-
-    var i = 0;
-    var interval = 6000;
-    var timer = null;
-    var onScreen = true;
-
-    function advance() {
-      slides[i].classList.remove("is-active");
-      i = (i + 1) % slides.length;
-      slides[i].classList.add("is-active");
-    }
-    function start() {
-      if (timer === null && onScreen && !document.hidden) {
-        timer = window.setInterval(advance, interval);
-      }
-    }
-    function stop() {
-      if (timer !== null) { window.clearInterval(timer); timer = null; }
-    }
-
-    // 画面外ではタイマーを止める（オフスクリーンの無駄な合成/描画を避ける）
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          onScreen = e.isIntersecting;
-          if (onScreen) start(); else stop();
-        });
-      }, { threshold: 0.05 });
-      io.observe(slideshow);
-    } else {
-      start();
-    }
-
-    // 非アクティブタブでも止める。復帰時は可視なら再開
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) stop(); else start();
-    });
-  }
-
-  /* ---- 6. アクティブナビ判定 ------------------------------------ */
+  /* ---- 5. アクティブナビ判定 ------------------------------------ */
   function initActiveNav() {
     var links = document.querySelectorAll(".nav-link");
     if (!links.length) return;
@@ -254,7 +213,6 @@
     initHeaderScroll();
     initNavToggle();
     initReveal();
-    initHeroSlideshow();
     initActiveNav();
     initContactForm();
   }
