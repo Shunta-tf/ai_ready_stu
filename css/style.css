@@ -3,7 +3,7 @@
    - 純 CSS のみ。色・余白・角丸は :root の変数経由でのみ使用する。
    - 統一モチーフ: 「ブルーのラインがホバーで出現」。
    - 禁止事項(CLAUDE.md): グラデ背景 / ブロブ / グロー / 強い影 /
-     派手なhover拡大 / 多色化。アクセントはブルー一色（#1f6ab0）のみ。
+     派手なhover拡大 / 多色化。有彩色はロゴ水色系（--brand/--accent）一系統のみ。
      角丸は大きめ・ピル型OK（ボタン・バッジ）。
    ===================================================================== */
 
@@ -11,18 +11,21 @@
    1. デザイントークン
    --------------------------------------------------------------------- */
 :root {
-  /* 配色: 本部ロゴ準拠（白基調 × 濃紺 × ロゴ系ブルー）。アクセントはブルー一色 */
+  /* 配色: 本部ロゴ実測色ベース（ロゴ水色 #83cbe4 × ロゴ濃紺 #22374a × 白）。
+     ロゴ水色は明るく小さな文字に使えないため、同色相を濃くした --accent を
+     リンク/ボタン用に導出（白地で4.5:1、AA適合）。ブランドの顔は --brand。 */
   --bg-primary:    #ffffff;   /* 背景・白 */
-  --bg-secondary:  #eef4f9;   /* 交互セクション（ロゴ水色の薄め） */
+  --bg-secondary:  #e9f4fa;   /* 交互セクション（ロゴ水色の薄い面） */
   --bg-card:       #ffffff;
-  --ink:           #15324f;   /* 見出し最濃（濃紺＝ロゴのライン色） */
-  --text-primary:  #25405f;   /* 強めの本文・小見出し */
-  --text-secondary:#4a5870;
-  --text-muted:    #616b7c;
-  --accent:        #1f6ab0;   /* ロゴ系ブルー・CTAとホバー線にだけ使う */
-  --accent-dark:   #16518a;   /* hover */
-  --accent-soft:   rgba(31,106,176,0.08);
-  --border:        rgba(21,50,79,0.12);
+  --brand:         #83cbe4;   /* ロゴの円の水色（実測）。装飾・リボン・面に使う */
+  --ink:           #22374a;   /* 見出し最濃（ロゴのライン濃紺・実測系） */
+  --text-primary:  #2e4a5e;   /* 強めの本文・小見出し */
+  --text-secondary:#4a6172;
+  --text-muted:    #5f7280;
+  --accent:        #1e7fa8;   /* ロゴ水色の濃色版。CTA・リンク・ラベルに使う */
+  --accent-dark:   #175f7e;   /* hover */
+  --accent-soft:   rgba(30,127,168,0.08);
+  --border:        rgba(34,55,74,0.12);
   --header-height: 72px;
   --section-pad:   72px 0;
   --max-width:     1200px;
@@ -30,13 +33,13 @@
   --radius-lg:     24px;      /* 浮遊パネル（uniways参考の大型角丸） */
   --radius-sm:     8px;       /* 入力・小要素 */
   --radius-pill:   999px;     /* ボタン・バッジ（ポップ） */
-  --shadow:        0 1px 2px rgba(15,40,65,0.04), 0 4px 14px rgba(15,40,65,0.06);
-  --shadow-hover:  0 2px 6px rgba(15,40,65,0.06), 0 14px 30px rgba(15,40,65,0.10);
+  --shadow:        0 1px 2px rgba(20,45,62,0.04), 0 4px 14px rgba(20,45,62,0.06);
+  --shadow-hover:  0 2px 6px rgba(20,45,62,0.06), 0 14px 30px rgba(20,45,62,0.10);
 
   /* 補助トークン（直値の手打ちを避けるための追加変数） */
   --header-bg:      rgba(255,255,255,0.85);
-  --sky:            #e3f0fb;  /* 明るい水色（アクセント帯・CTAの背景） */
-  --sky-tag:        #d7e9f8;  /* 水色チップ */
+  --sky:            #d9edf7;  /* 明るい水色（アクセント帯・CTAの背景。ロゴ水色の淡色） */
+  --sky-tag:        #c8e5f4;  /* 水色チップ */
   /* 濃紺フッター・有彩色面上の白テキスト。白も直値にせずトークン化 */
   --on-dark:        #ffffff;
   --on-dark-mute:   rgba(255,255,255,0.72);
@@ -275,9 +278,20 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .brand {
   display: inline-flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   line-height: 1.2;
   color: var(--ink);
+}
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  display: block;
+  flex: 0 0 auto;
+}
+.brand-text {
+  display: inline-flex;
+  flex-direction: column;
 }
 .brand-name {
   font-family: var(--font-display);
@@ -379,7 +393,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: absolute;
   inset: 0;
   z-index: var(--z-base);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 860' fill='none'%3E%3Cpath d='M-160 700 C 320 320 760 900 1600 380' stroke='%23eef4f9' stroke-width='150' stroke-linecap='round'/%3E%3Cpath d='M980 950 C 1150 720 1330 640 1640 560' stroke='%231f6ab0' stroke-width='80' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 860' fill='none'%3E%3Cpath d='M-160 700 C 320 320 760 900 1600 380' stroke='%23e9f4fa' stroke-width='150' stroke-linecap='round'/%3E%3Cpath d='M980 950 C 1150 720 1330 640 1640 560' stroke='%2383cbe4' stroke-width='80' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
