@@ -464,6 +464,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   flex-wrap: wrap;
   gap: 14px;
 }
+/* 日本語の折り返し調整:
+   .np = 文節単位の折り返しユニット（見出し・キャッチコピー用。語中で改行させない） */
+.np { display: inline-block; }
+/* 段落・リスト項目は孤立行（1〜2文字だけの行）を避ける。未対応ブラウザでは無視される */
+p, li { text-wrap: pretty; }
+/* カード見出しは行の偏り・孤立を避ける */
+.card-title, .pillar-title, .article-title { text-wrap: balance; }
+
 /* 写真の共通フレーム（角丸 + 影）。比率は修飾クラスで指定する */
 .photo-frame {
   border-radius: var(--radius);
