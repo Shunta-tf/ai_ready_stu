@@ -27,6 +27,7 @@
   --section-pad:   72px 0;
   --max-width:     1200px;
   --radius:        14px;      /* カードなど（親しみのある角丸） */
+  --radius-lg:     24px;      /* 浮遊パネル（uniways参考の大型角丸） */
   --radius-sm:     8px;       /* 入力・小要素 */
   --radius-pill:   999px;     /* ボタン・バッジ（ポップ） */
   --shadow:        0 1px 2px rgba(15,40,65,0.04), 0 4px 14px rgba(15,40,65,0.06);
@@ -36,8 +37,10 @@
   --header-bg:      rgba(255,255,255,0.85);
   --sky:            #e3f0fb;  /* 明るい水色（アクセント帯・CTAの背景） */
   --sky-tag:        #d7e9f8;  /* 水色チップ */
-  /* 有彩色面上の白テキスト。白も直値にせずトークン化 */
+  /* 濃紺フッター・有彩色面上の白テキスト。白も直値にせずトークン化 */
   --on-dark:        #ffffff;
+  --on-dark-mute:   rgba(255,255,255,0.72);
+  --on-dark-border: rgba(255,255,255,0.22);
   --font-display:  "Inter", system-ui, sans-serif;
   --font-body:     "Noto Sans JP", system-ui, sans-serif;
   --ease:          cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -148,31 +151,34 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-align: center;
 }
 
-/* 英語ラベル + 短いブルー線。常時だが「カード上の装飾線」ではなくラベル付随線 */
+/* 見出しは「大きな青い英字 + 短い青下線 + 小さな日本語」（uniways参考・ABOUT/ACCESS式） */
 .section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  display: block;
   font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: clamp(2.1rem, 4.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
-.section-label::before {
+.section-label::after {
   content: "";
-  width: 28px;
-  height: 2px;
+  display: block;
+  width: 44px;
+  height: 3px;
+  border-radius: var(--radius-pill);
   background-color: var(--accent);
+  margin-top: 14px;
 }
-.section-header--center .section-label { justify-content: center; }
+.section-header--center .section-label::after { margin-left: auto; margin-right: auto; }
 
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  margin-top: 16px;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.16em;
   color: var(--ink);
 }
 
@@ -247,13 +253,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   z-index: var(--z-header);
   display: flex;
   align-items: center;
-  /* 既定はソリッド（サブページ用）。トップのヒーロー上のみ下で透明化する */
+  /* 半透明+blur。境界線は持たず、ピル型ナビが視覚構造を担う（uniways参考） */
   background-color: var(--header-bg);
   -webkit-backdrop-filter: saturate(140%) blur(10px);
   backdrop-filter: saturate(140%) blur(10px);
-  border-bottom: 1px solid var(--border);
   transition: background-color var(--t-base) var(--ease),
-              border-color var(--t-base) var(--ease),
               box-shadow var(--t-base) var(--ease);
 }
 /* スクロール時に影を足す（ヒーローも明色のため、ヘッダーは常にソリッド白） */
@@ -288,7 +292,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--text-muted);
 }
 
-.nav { display: flex; align-items: center; gap: 8px; }
+/* デスクトップは白いピル型コンテナのナビ（uniways参考） */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 6px 6px 18px;
+  box-shadow: var(--shadow);
+}
 .nav-list {
   display: flex;
   align-items: center;
@@ -359,7 +373,42 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--text-primary);
   overflow: hidden;
 }
+/* 背景の曲線モチーフ（“道”＝WAYS。薄い水色のカーブ + ブルーの帯。uniways参考） */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-base);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 860' fill='none'%3E%3Cpath d='M-160 700 C 320 320 760 900 1600 380' stroke='%23eef4f9' stroke-width='150' stroke-linecap='round'/%3E%3Cpath d='M980 950 C 1150 720 1330 640 1640 560' stroke='%231f6ab0' stroke-width='80' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  pointer-events: none;
+}
 .hero .container { position: relative; z-index: var(--z-content); }
+
+/* 有色面セクション用の控えめな白カーブ装飾 */
+.section--deco { position: relative; overflow: hidden; }
+.section--deco::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-base);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 700' fill='none'%3E%3Cpath d='M-200 560 C 360 200 900 760 1640 260' stroke='%23ffffff' stroke-width='130' stroke-linecap='round' opacity='0.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+}
+.section--deco > .container { position: relative; z-index: var(--z-content); }
+
+/* 浮遊する白パネル（有色面の上にコンテンツを載せる器。uniways参考） */
+.panel {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(28px, 4.5vw, 56px);
+}
 .hero-grid {
   display: grid;
   grid-template-columns: 1.08fr 0.92fr;
@@ -387,8 +436,16 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--text-secondary);
   max-width: 56ch;
 }
+.hero-sub-en {
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
 .hero-actions {
-  margin-top: 32px;
+  margin-top: 28px;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -637,21 +694,22 @@ a.news-title:hover { text-decoration-color: var(--accent); }
 /* ---------------------------------------------------------------------
    11. フッター（3カラム）
    --------------------------------------------------------------------- */
+/* 濃紺のフッター帯（uniways参考。サイトの締めのアンカー） */
 .site-footer {
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border);
-  padding: 56px 0 28px;
+  background-color: var(--ink);
+  padding: 60px 0 28px;
 }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
   gap: 40px;
 }
-.footer-brand .brand-name { font-size: 1.1rem; color: var(--ink); }
+.footer-brand .brand-name { font-size: 1.1rem; color: var(--on-dark); }
+.site-footer .brand-name { color: var(--on-dark); }
 .footer-tagline {
   margin-top: 14px;
   font-size: 0.94rem;
-  color: var(--text-secondary);
+  color: var(--on-dark-mute);
   max-width: 40ch;
 }
 .footer-col h3 {
@@ -660,39 +718,57 @@ a.news-title:hover { text-decoration-color: var(--accent); }
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-secondary);  /* 二次背景上で AA を満たす（muted は不足） */
+  color: var(--on-dark-mute);
   margin-bottom: 16px;
 }
 .footer-col li { margin-bottom: 10px; }
-.footer-col a { color: var(--text-secondary); font-size: 0.95rem; }
-.footer-col a:hover { color: var(--accent); }
+.footer-col a { color: var(--on-dark-mute); font-size: 0.95rem; }
+.footer-col a:hover { color: var(--on-dark); }
 .footer-bottom {
   margin-top: 44px;
   padding-top: 20px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--on-dark-border);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
   font-size: 0.85rem;
-  color: var(--text-secondary);  /* 二次背景上で AA を満たす */
+  color: var(--on-dark-mute);
 }
+.footer-bottom a { color: var(--on-dark-mute); }
+.footer-bottom a:hover { color: var(--on-dark); }
 
 /* ---------------------------------------------------------------------
    11b. サブページ共通 / 追加コンポーネント
    --------------------------------------------------------------------- */
 
 /* ページ先頭の見出し帯（固定ヘッダー分の余白を確保） */
+/* 下層ページの見出しも「大きな青い英字 + 小さな日本語」に統一（uniways参考） */
 .page-hero {
-  padding: calc(var(--header-height) + 56px) 0 52px;
+  padding: calc(var(--header-height) + 64px) 0 56px;
   background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
+}
+.page-hero .eyebrow {
+  display: block;
+  font-size: clamp(2.4rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+.page-hero .eyebrow::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent);
+  margin-top: 14px;
 }
 .page-title {
-  margin-top: 14px;
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  margin-top: 16px;
+  font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.16em;
   color: var(--ink);
 }
 .page-lead {
@@ -908,25 +984,23 @@ a.news-title:hover { text-decoration-color: var(--accent); }
   padding: 0;
   margin: 0;
 }
+/* 白パネル内に置く薄水色タイル + 青の点線コネクタ（uniwaysのプロセス図参考） */
 .cycle-step {
   position: relative;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
+  background-color: var(--bg-secondary);
   border-radius: var(--radius);
   padding: 26px 16px 22px;
   text-align: center;
-  box-shadow: var(--shadow);
 }
 .cycle-step:not(:last-child)::after {
-  content: "→";
-  content: "→" / "";  /* 装飾矢印はスクリーンリーダーに読ませない（対応環境のみ） */
+  content: "";
   position: absolute;
-  right: -22px;
+  right: -28px;
   top: 50%;
+  width: 28px;
+  height: 0;
+  border-top: 3px dotted var(--accent);
   transform: translateY(-50%);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 1.1rem;
 }
 .cycle-en {
   font-family: var(--font-display);
@@ -958,19 +1032,18 @@ a.news-title:hover { text-decoration-color: var(--accent); }
   padding: 0;
   margin: 0;
 }
+/* 白パネル内の薄水色タイル */
 .declaration-item {
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
+  background-color: var(--bg-secondary);
   border-radius: var(--radius);
   padding: 18px 22px;
   font-size: 1.02rem;
   font-weight: 500;
   line-height: 1.8;
   color: var(--text-primary);
-  box-shadow: var(--shadow);
 }
 .declaration-item::before {
   content: "✓";
@@ -994,11 +1067,11 @@ a.news-title:hover { text-decoration-color: var(--accent); }
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.5rem, 3.2vw, 2.1rem);
-  line-height: 1.5;
-  letter-spacing: -0.01em;
+  line-height: 1.6;
+  letter-spacing: 0.04em;   /* uniways参考のややゆったりした字間（広げすぎると折返しが崩れる） */
   color: var(--ink);
   text-wrap: balance;
-  max-width: 22ch;
+  max-width: 26ch;
 }
 .statement-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
 
@@ -1156,7 +1229,7 @@ body.loaded { opacity: 1; }
     backdrop-filter: none;
   }
 
-  /* モバイルナビ：右からスライドするパネル */
+  /* モバイルナビ：右からスライドするパネル（デスクトップのピル型スタイルはここで解除） */
   .nav-toggle { display: block; z-index: var(--z-nav); }
   .nav {
     position: fixed;
@@ -1167,6 +1240,8 @@ body.loaded { opacity: 1; }
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
+    border: 0;
+    border-radius: 0;
     /* 上はヘッダー分、右・下は safe-area を確保 */
     padding: calc(var(--header-height) + 16px) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) 24px;
     background-color: var(--bg-card);
@@ -1215,15 +1290,17 @@ body.loaded { opacity: 1; }
   }
   .news-cat { margin: 2px 0; }
 
-  /* 基本サイクルは縦積みにし、矢印を下向きへ */
+  /* 基本サイクルは縦積みにし、点線コネクタを縦向きへ */
   .cycle-flow { grid-template-columns: 1fr; gap: 30px; }
   .cycle-step:not(:last-child)::after {
-    content: "↓";
-    content: "↓" / "";
     right: auto;
     left: 50%;
     top: auto;
-    bottom: -26px;
+    bottom: -30px;
+    width: 0;
+    height: 30px;
+    border-top: 0;
+    border-left: 3px dotted var(--accent);
     transform: translateX(-50%);
   }
 }
